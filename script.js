@@ -29,7 +29,7 @@ function onPaperButtonClick() {
 function onScissorsButtonClick() {
     playerChoice = 'scissors';
     computerChoice = getComputerChoice();
-    console.log(playRound(playerChoice, computerChoice));
+    updateRound(playRound(playerChoice, computerChoice));
     console.log(`Computer score: ${computerScore} | Your score: ${playerScore}`);
 }
 
@@ -57,7 +57,7 @@ function playRound(playerChoice, computerChoice) {
 
     checkForWinner(); 
 
-    
+    updateRound(playerChoice, computerChoice);
     updateResults(resultMessage);
     updateScore();
 }
@@ -97,5 +97,10 @@ function updateScore() {
 function updateResults() {
     const results = document.getElementById('results');
     results.textContent = `Winner: ${winner}`;
+}
+
+function updateRound(playerChoice, computerChoice) {
+    const round = document.getElementById('round');
+    round.textContent = `You picked: ${capitalizeFirstLetter(playerChoice)}, Computer picked: ${capitalizeFirstLetter(computerChoice)}`;
 }
 
