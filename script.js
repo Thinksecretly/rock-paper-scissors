@@ -1,106 +1,73 @@
-
 const choices = ['rock', 'paper', 'scissors'];
-let computerChoice = '';
-let playerChoice = '';
 let computerScore = 0;
 let playerScore = 0;
-let winner = ' ';
+let gameOver = false;
 
 const rockButton = document.getElementById('rock-btn');
 const paperButton = document.getElementById('paper-btn');
 const scissorsButton = document.getElementById('scissors-btn');
+const resultsDiv = document.getElementById('results');
+const scoreDiv = document.getElementById('score');
+const roundDiv = document.getElementById('round');
 
-//Button Logic
+// Button Listeners
+rockButton.addEventListener('click', () => playerMakesChoice('rock'));
+paperButton.addEventListener('click', () => playerMakesChoice('paper'));
+scissorsButton.addEventListener('click', () => playerMakesChoice('scissors'));
 
-function onRockButtonClick() {
-    playerChoice = 'rock';
-    computerChoice = getComputerChoice();
-    console.log(playRound(playerChoice, computerChoice));
-    console.log(`Computer score: ${computerScore} | Your score: ${playerScore}`);
+function playerMakesChoice(playerChoice) {
+    if (gameOver) {
+        return;
+    }
+
+    const computerChoice = getComputerChoice();
+    const roundResult = playRound(playerChoice, computerChoice);
+    updateResults(roundResult);
+    updateScore();
+    updateRound(playerChoice, computerChoice);
+    checkForWinner();
 }
-
-function onPaperButtonClick() {
-    playerChoice = 'paper';
-    computerChoice = getComputerChoice();
-    console.log(playRound(playerChoice, computerChoice));
-    console.log(`Computer score: ${computerScore} | Your score: ${playerScore}`);
-}
-
-function onScissorsButtonClick() {
-    playerChoice = 'scissors';
-    computerChoice = getComputerChoice();
-    updateRound(playRound(playerChoice, computerChoice));
-    console.log(`Computer score: ${computerScore} | Your score: ${playerScore}`);
-}
-
-// Game Logic
 
 function getComputerChoice() {
-    let index = Math.floor(Math.random() * choices.length);
-    return choices[index];
+    const randomIndex = Math.floor(Math.random() * choices.length);
+    return choices[randomIndex];
 }
 
 function playRound(playerChoice, computerChoice) {
-    let resultMessage = ''; 
-
     if (playerChoice === computerChoice) {
-        resultMessage = "It's a tie!";
+        return "It's a tie!";
     } else if ((playerChoice === 'rock' && computerChoice === 'scissors') ||
                (playerChoice === 'paper' && computerChoice === 'rock') ||
                (playerChoice === 'scissors' && computerChoice === 'paper')) {
         playerScore++;
-        resultMessage = `You win! ${capitalizeFirstLetter(playerChoice)} beats ${capitalizeFirstLetter(computerChoice)}.`;
+        return `You win! ${capitalizeFirstLetter(playerChoice)} beats ${capitalizeFirstLetter(computerChoice)}.`;
     } else {
         computerScore++;
-        resultMessage = `You lose! ${capitalizeFirstLetter(computerChoice)} beats ${capitalizeFirstLetter(playerChoice)}.`;
+        return `You lose! ${capitalizeFirstLetter(computerChoice)} beats ${capitalizeFirstLetter(playerChoice)}.`;
     }
+}
 
-    checkForWinner(); 
-
-    updateRound(playerChoice, computerChoice);
-    updateResults(resultMessage);
-    updateScore();
+function updateScore() {
+    scoreDiv.textContent = `Computer score: ${computerScore} | Your score: ${playerScore}`;
 }
 
 function updateResults(resultMessage) {
-    const resultsDiv = document.getElementById('results');
-    resultsDiv.textContent = resultMessage + ` Computer score: ${computerScore} | Your score: ${playerScore}`;
-    checkForWinner(); 
+    resultsDiv.textContent = resultMessage;
+}
+
+function updateRound(playerChoice, computerChoice) {
+    roundDiv.textContent = `You picked: ${capitalizeFirstLetter(playerChoice)}, Computer picked: ${capitalizeFirstLetter(computerChoice)}`;
 }
 
 function checkForWinner() {
-    const resultsDiv = document.getElementById('results');
     if (playerScore >= 5 || computerScore >= 5) {
-        winner = playerScore >= 5 ? 'Congratulations! You win' : 'Game over! The computer wins';
-        resultsDiv.textContent = `${winner} won the game!`;
-        // add logic to end game
+        gameOver = true;
+        const winnerMessage = playerScore >= 5 ? 'Congratulations! You win the game!' : 'Game over! The computer wins the game!';
+        resultsDiv.textContent = winnerMessage;
+        // Add any logic here for what happens when the game ends, e.g., disabling buttons
     }
 }
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
-
-
-
-rockButton.addEventListener('click', onRockButtonClick);
-paperButton.addEventListener('click', onPaperButtonClick);
-scissorsButton.addEventListener('click', onScissorsButtonClick);
-
-// update results
-
-function updateScore() {
-    const results = document.getElementById('score');
-    results.textContent = `Computer score: ${computerScore} | Your score: ${playerScore}`;
-}
-
-function updateResults() {
-    const results = document.getElementById('results');
-    results.textContent = `Winner: ${winner}`;
-}
-
-function updateRound(playerChoice, computerChoice) {
-    const round = document.getElementById('round');
-    round.textContent = `You picked: ${capitalizeFirstLetter(playerChoice)}, Computer picked: ${capitalizeFirstLetter(computerChoice)}`;
-}
-
