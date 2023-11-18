@@ -18,23 +18,23 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-image: url('images/bizarre.png'); /* Placeholder for Warhol-inspired background */
+    background-image: url('images/bizarre.png'); 
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
   }
   
   header h1 {
     color: #1a1a1a;
-    background-color: aliceblue; /* dark grey, almost black for a cleaner look */
-    font-size: 3rem; /* keeping the size substantial but not overwhelming */
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* a clean, sans-serif font */
-    text-transform: uppercase; /* for a cleaner and more modern aesthetic */
-    letter-spacing: 2px; /* adding some spacing between letters */
-    margin-bottom: 20px; /* space below the title */
-    text-shadow: none; /* removing any text shadow for a flat, clean look */
+    background-color: aliceblue; 
+    font-size: 3rem; 
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+    margin-bottom: 20px; 
+    text-shadow: none; 
   }
   
-  /* Buttons with a punk rock badge look */
+ 
   button {
     border: 3px solid #000;
     background-color: #fff;
@@ -56,7 +56,7 @@
     color: #fff;
   }
   
-  /* Styling for game status updates, combining sleek X interface with Warhol colors */
+  /* Styling for game status updates */
   #round,
   #score,
   #results {
